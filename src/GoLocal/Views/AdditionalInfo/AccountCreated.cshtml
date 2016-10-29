@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model GoLocal.Models.registered_staff
+@{
+    ViewData["Title"] = "Account Confirmation";
+}
+
+<h2>@ViewBag.ConfirmationMessage</h2>
+<h3>@ViewData["staffID"].</h3>
+
+<div class="form_horizontal">
+    <form asp-controller="AccountCreated" asp-action="AccountCreated" method="post">
+        
+       <button type="submit" class="btn-default pull-right">OK</button>
+
+
+    </form>
+
+</div>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
