@@ -11,6 +11,7 @@ namespace GoLocal.Models
     public class OurDBContext: DbContext
     {
         public DbSet<registered_staff> registered_staff { get; set; }
+        public DbSet<staff_type> staff_type { get; set; }
 
         public OurDBContext(DbContextOptions<OurDBContext> options):base(options)
         {
@@ -30,7 +31,7 @@ namespace GoLocal.Models
             ChangeTracker.DetectChanges();
 
             updateUpdatedProperty<registered_staff>();
-
+     
             return base.SaveChanges();
 
         }

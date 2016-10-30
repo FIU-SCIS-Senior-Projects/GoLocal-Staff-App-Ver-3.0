@@ -2,8 +2,11 @@
 {
     public class StaffAdditionalInfo
     {
+        
+
         public string NickName { get; set; }
         public string StaffType { get; set; }
+        public string OtherDescription { get; set; }
         public string NativeLanguage { get; set; }
         public string SecondLanguage { get; set; }
         public string ThirdLanguage { get; set; }

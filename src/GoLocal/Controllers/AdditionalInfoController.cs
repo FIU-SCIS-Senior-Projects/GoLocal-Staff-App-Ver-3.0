@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GoLocal.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Reflection;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,13 +28,34 @@ namespace GoLocal.Controllers
         }
         public IActionResult AdditionalInfo()
         {
-            ViewBag.StaffTypes = Enum.GetValues(typeof(StaffTypes)).Cast<StaffTypes>().Select(v => new SelectListItem { Text = v.ToString(), Value = v.ToString() });
+            FillStaffTypes();
+
             return View();
         }
+
+        private void FillStaffTypes()
+        {
+            var names = typeof(staff_type).GetProperties()
+                               .Select(property => property.Name)
+                               .ToList();
+
+            ViewBag.StaffTypes = names.Select(v => new SelectListItem { Text = v.ToString().Replace('_', ' '), Value = v.ToString() })
+                .Where(v => v.Value != "StaffID" && !v.Value.Contains("Description") && !v.Value.Contains("Website") && !v.Value.Contains("Social_Media"))
+                .ToList();
+        }
+
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdditionalInfo([Bind("StaffType,NativeLanguage,SecondLanguage,ThirdLanguage,TypeDL,Ethnicity,Height,Weight,HairColor,EyeColor,ShirtSize,PantSize,ChestSize,WaistSize,HipSize, DressSize,ShoeSize,Tattoos,Piercings,DesiredHourlyRate,DesiredWeeklyRate,SsnOrEin, BusinessName,Travel,Insurance, BankRouting, AccountNumber")] StaffAdditionalInfo info)
         {
+            FillStaffTypes();
+
             if (ModelState.IsValid)
             {
                 if (_context.registered_staff.Count() > 0)
@@ -41,7 +63,15 @@ namespace GoLocal.Controllers
                     try
                     {
                         registered_staff staff = _context.registered_staff.Last();
-                        staff.StaffType = info.StaffType;
+
+                        if (info.StaffType != "Other")
+                        {
+                            staff.StaffType = info.StaffType;
+                        }else
+                        {
+                            staff.StaffType = info.OtherDescription;
+
+                        }
                         staff.NativeLanguage = info.NativeLanguage;
                         staff.SecondLanguage = info.SecondLanguage;
                         staff.ThirdLanguage = info.ThirdLanguage;
@@ -78,14 +108,12 @@ namespace GoLocal.Controllers
                     }
                     catch (Exception e)
                     {
-                        ViewBag.ConfirmationMessage = Enum.GetValues(typeof(StaffTypes)).Cast<StaffTypes>().Select(v => new SelectListItem { Text = v.ToString(), Value = v.ToString() });
                         return View(info);
 
                     }
                 }
             }
 
-            ViewBag.StaffTypes = Enum.GetValues(typeof(StaffTypes)).Cast<StaffTypes>().Select(v => new SelectListItem { Text = v.ToString(), Value = v.ToString() });
             return View(info);
         }
     }

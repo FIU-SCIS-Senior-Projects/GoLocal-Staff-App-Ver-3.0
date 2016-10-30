@@ -18,6 +18,7 @@ namespace GoLocal.Models
         [Required(ErrorMessage = "Field can't be empty")]
         public string City { get; set; }
         [Required(ErrorMessage = "Field can't be empty")]
+        [DataType(DataType.PostalCode)]
         public string ZipCode { get; set; }
         [Required(ErrorMessage = "Field can't be empty")]
         public string State { get; set; }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using GoLocal.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,28 +32,48 @@ namespace GoLocal.Controllers
         }
         public IActionResult RequiredInfo()
         {
-
+            return View();
+        }
+        public IActionResult Error()
+        {
             return View();
         }
 
         public IActionResult AdditionalInfo()
         {
-            return View();
+            try
+            {
+
+                FillStaffTypes();
+                
+                return View(new StaffAdditionalInfo());
+            }
+            catch (Exception e) { return View(); }
+            
+        }
+
+        private void FillStaffTypes()
+        {
+            var names = typeof(staff_type).GetProperties()
+                                           .Select(property => property.Name)
+                                           .ToList();
+
+            ViewBag.StaffTypes = names.Select(v => new SelectListItem { Text = v.ToString().Replace('_', ' '), Value = v.ToString() })
+                .Where(v => v.Value != "StaffID" && !v.Value.Contains("Description") && !v.Value.Contains("Website") && !v.Value.Contains("Social_Media"))
+                .ToList();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RequiredInfo([Bind("FirstName,MiddleInitial,LastName,Address,City,ZipCode,State,Phone,DateOfBirth,Gender")] StaffRequiredInfo info)
-        {           
-
+        {
             if (ModelState.IsValid)
             {
-
                 if (_context.registered_staff.Count() > 0)
                 {
                     try
                     {
-                        var modifiedSourceInfo = _context.ChangeTracker.Entries<registered_staff>().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+                        //var modifiedSourceInfo = _context.ChangeTracker.Entries<registered_staff>().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
                         registered_staff staff = _context.registered_staff.Last();
                         staff.MiddleInitial = info.MiddleInitial;
                         staff.LastName = info.LastName;
@@ -64,23 +85,20 @@ namespace GoLocal.Controllers
                         staff.DateOfBirth = info.DateOfBirth;
                         staff.Gender = info.Gender;
                         await _context.SaveChangesAsync();
-                        ViewBag.StaffTypes = Enum.GetValues(typeof(StaffTypes)).Cast<StaffTypes>().Select(v => new SelectListItem { Text = v.ToString(), Value = v.ToString() });
-                        return View("AdditionalInfo");
+
+                        FillStaffTypes();
+
+                        return RedirectToAction("AdditionalInfo");
                     }
                     catch (Exception e)
                     {
-                        ViewBag.States = Enum.GetValues(typeof(States)).Cast<States>().Select(v => new SelectListItem { Text = v.ToString(), Value = v.ToString() });
-                        ViewBag.Genders = Enum.GetValues(typeof(Genders)).Cast<Genders>().Select(v => new SelectListItem { Text = v.ToString(), Value = v.ToString() });
+                       
                         return View(info);
 
                     }
-                }            
-
-
+                }    
             }
 
-            ViewBag.States = Enum.GetValues(typeof(States)).Cast<States>().Select(v => new SelectListItem { Text = v.ToString(), Value = v.ToString() });
-            ViewBag.Genders = Enum.GetValues(typeof(Genders)).Cast<Genders>().Select(v => new SelectListItem { Text = v.ToString(), Value = v.ToString() });
             return View(info);
         }
     }

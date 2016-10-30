@@ -1,179 +1,215 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model GoLocal.Models.StaffAdditionalInfo
-@{
-    ViewData["Title"] = "Additional Information";
-}
+﻿
+    @model GoLocal.Models.StaffAdditionalInfo
+    @{
+        ViewData["Title"] = "Additional Information";
+    }
+    
 
-<h2>@ViewData["Title"].</h2>
+    <h2>@ViewData["Title"].</h2>
 
-<div class="form_horizontal">
-    <form asp-controller="AdditionalInfo" asp-action="AdditionalInfo" method="post">
-        <div class="form-group">
-            <label asp-for="StaffType" class="col-md-2 control-label">Staff Type</label>
-            <div class="col-md-10">
-                <select asp-for="StaffType" class="form-control" asp-items="ViewBag.StaffTypes"></select>
-                <span asp-validation-for="StaffType" class="text-danger"></span>
-            </div>
-        </div
-        <div class="form-group">
-            <label asp-for="NickName" class="col-md-2 control-label">Nick Name</label>
-            <div class="col-md-10">
-                <input asp-for="NickName" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="BusinessName" class="col-md-2 control-label">Business Name</label>
-            <div class="col-md-10">
-                <input asp-for="BusinessName" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="SsnOrEin" class="col-md-2 control-label">SSN</label>
-            <div class="col-md-10">
-                <input asp-for="SsnOrEin" class="form-control" />
-                <span asp-validation-for="SsnOrEin" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="NativeLanguage" class="col-md-2 control-label">Native Language</label>
-            <div class="col-md-10">
-                <input asp-for="NativeLanguage" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="SecondLanguage" class="col-md-2 control-label">Second Language</label>
-            <div class="col-md-10">
-                <input asp-for="SecondLanguage" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="ThirdLanguage" class="col-md-2 control-label">Third Language</label>
-            <div class="col-md-10">
-                <input asp-for="ThirdLanguage" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Ethnicity" class="col-md-2 control-label">Ethnicity</label>
-            <div class="col-md-10">
-                <input asp-for="Ethnicity" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Height" class="col-md-2 control-label">Height</label>
-            <div class="col-md-10">
-                <input asp-for="Height" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Weight" class="col-md-2 control-label">Weight</label>
-            <div class="col-md-10">
-                <input asp-for="Weight" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="HairColor" class="col-md-2 control-label">Hair Color</label>
-            <div class="col-md-10">
-                <input asp-for="HairColor" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="EyeColor" class="col-md-2 control-label">Eye Color</label>
-            <div class="col-md-10">
-                <input asp-for="EyeColor" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="ShirtSize" class="col-md-2 control-label">Shirt Size</label>
-            <div class="col-md-10">
-                <input asp-for="ShirtSize" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="PantSize" class="col-md-2 control-label">Pant Size</label>
-            <div class="col-md-10">
-                <input asp-for="PantSize" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="WaistSize" class="col-md-2 control-label">Waist Size</label>
-            <div class="col-md-10">
-                <input asp-for="WaistSize" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="HipSize" class="col-md-2 control-label">Hip Size</label>
-            <div class="col-md-10">
-                <input asp-for="HipSize" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="DressSize" class="col-md-2 control-label">Dress Size</label>
-            <div class="col-md-10">
-                <input asp-for="DressSize" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="ShoeSize" class="col-md-2 control-label">Shoe Size</label>
-            <div class="col-md-10">
-                <input asp-for="ShoeSize" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Tattoos" class="col-md-2 control-label">Tattoos</label>
-            <div class="col-md-10">
-                <input asp-for="Tattoos" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Piercings" class="col-md-2 control-label">Piercings</label>
-            <div class="col-md-10">
-                <input asp-for="Piercings" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="DesiredHourlyRate" class="col-md-2 control-label">Desired Hourly Rate</label>
-            <div class="col-md-10">
-                <input asp-for="DesiredHourlyRate" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="DesiredWeeklyRate" class="col-md-2 control-label">Desired Weekly Rate</label>
-            <div class="col-md-10">
-                <input asp-for="DesiredWeeklyRate" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Travel" class="col-md-2 control-label">Availablility to Travel</label>
-            <div class="col-md-10">
-                <input asp-for="Travel" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Insurance" class="col-md-2 control-label">Insurance</label>
-            <div class="col-md-10">
-                <input asp-for="Insurance" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="BankRouting" class="col-md-2 control-label">Bank Routing</label>
-            <div class="col-md-10">
-                <input asp-for="BankRouting" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="AccountNumber" class="col-md-2 control-label">Account Number</label>
-            <div class="col-md-10">
-                <input asp-for="AccountNumber" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 ">
-                <button type="submit" class="btn-default">Submit</button>
-            </div>
-        </div>
+    <script asp-src-include="~/lib/jquery/dist/jquery.js"></script>
+      
 
-    </form>
+    <div class="form_horizontal">
+        <form asp-controller="AdditionalInfo" asp-action="AdditionalInfo" method="post">
 
-</div>
+
+            <div class="form-group">
+                <label asp-for="StaffType" class="col-md-2 control-label">Staff Type</label>
+                <div class="col-md-10">
+                    <select asp-for="StaffType" class="form-control" id="type" asp-items="ViewBag.StaffTypes"> <option></option> </select>
+                    <span asp-validation-for="StaffType" class="text-danger"></span>
+                </div>
+            </div>    
+
+            <div class="form-group" id="other">
+                <label asp-for="OtherDescription" class="col-md-2 control-label">Enter Description</label>
+                    <div class="col-md-10">
+                        <input asp-for="OtherDescription" class="form-control" />
+                    </div>
+            </div>
+                       
+
+            <div class="form-group">
+                <label asp-for="NickName" class="col-md-2 control-label">Nick Name</label>
+                <div class="col-md-10">
+                    <input asp-for="NickName" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="BusinessName" class="col-md-2 control-label">Business Name</label>
+                <div class="col-md-10">
+                    <input asp-for="BusinessName" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="SsnOrEin" class="col-md-2 control-label">SSN</label>
+                <div class="col-md-10">
+                    <input asp-for="SsnOrEin" class="form-control" />
+                    <span asp-validation-for="SsnOrEin" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="NativeLanguage" class="col-md-2 control-label">Native Language</label>
+                <div class="col-md-10">
+                    <input asp-for="NativeLanguage" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondLanguage" class="col-md-2 control-label">Second Language</label>
+                <div class="col-md-10">
+                    <input asp-for="SecondLanguage" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThirdLanguage" class="col-md-2 control-label">Third Language</label>
+                <div class="col-md-10">
+                    <input asp-for="ThirdLanguage" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ethnicity" class="col-md-2 control-label">Ethnicity</label>
+                <div class="col-md-10">
+                    <input asp-for="Ethnicity" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Height" class="col-md-2 control-label">Height</label>
+                <div class="col-md-10">
+                    <input asp-for="Height" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weight" class="col-md-2 control-label">Weight</label>
+                <div class="col-md-10">
+                    <input asp-for="Weight" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="HairColor" class="col-md-2 control-label">Hair Color</label>
+                <div class="col-md-10">
+                    <input asp-for="HairColor" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="EyeColor" class="col-md-2 control-label">Eye Color</label>
+                <div class="col-md-10">
+                    <input asp-for="EyeColor" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShirtSize" class="col-md-2 control-label">Shirt Size</label>
+                <div class="col-md-10">
+                    <input asp-for="ShirtSize" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="PantSize" class="col-md-2 control-label">Pant Size</label>
+                <div class="col-md-10">
+                    <input asp-for="PantSize" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="WaistSize" class="col-md-2 control-label">Waist Size</label>
+                <div class="col-md-10">
+                    <input asp-for="WaistSize" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="HipSize" class="col-md-2 control-label">Hip Size</label>
+                <div class="col-md-10">
+                    <input asp-for="HipSize" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DressSize" class="col-md-2 control-label">Dress Size</label>
+                <div class="col-md-10">
+                    <input asp-for="DressSize" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShoeSize" class="col-md-2 control-label">Shoe Size</label>
+                <div class="col-md-10">
+                    <input asp-for="ShoeSize" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tattoos" class="col-md-2 control-label">Tattoos</label>
+                <div class="col-md-10">
+                    <input asp-for="Tattoos" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Piercings" class="col-md-2 control-label">Piercings</label>
+                <div class="col-md-10">
+                    <input asp-for="Piercings" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DesiredHourlyRate" class="col-md-2 control-label">Desired Hourly Rate</label>
+                <div class="col-md-10">
+                    <input asp-for="DesiredHourlyRate" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DesiredWeeklyRate" class="col-md-2 control-label">Desired Weekly Rate</label>
+                <div class="col-md-10">
+                    <input asp-for="DesiredWeeklyRate" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Travel" class="col-md-2 control-label">Availablility to Travel</label>
+                <div class="col-md-10">
+                    <input asp-for="Travel" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Insurance" class="col-md-2 control-label">Insurance</label>
+                <div class="col-md-10">
+                    <input asp-for="Insurance" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="BankRouting" class="col-md-2 control-label">Bank Routing</label>
+                <div class="col-md-10">
+                    <input asp-for="BankRouting" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccountNumber" class="col-md-2 control-label">Account Number</label>
+                <div class="col-md-10">
+                    <input asp-for="AccountNumber" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 ">
+                    <button type="submit" class="btn-default">Submit</button>
+                </div>
+            </div>
+
+        </form>
+        @section scripts{
+            <script>
+                $(document).ready(function () {
+
+                    $("#other").hide();
+
+                    $("#type").on("change", function () {                        
+
+                        var val = $(this).val();
+
+                        if (val == "Other") {
+
+                            $("#other").show();
+                        }else
+                        {
+                            $("#other").hide();
+                        }
+     
+                    });
+                });
+            </script>
+        }
+
+    </div>
+

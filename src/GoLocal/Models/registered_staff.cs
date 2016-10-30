@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,12 +10,14 @@ namespace GoLocal.Models
 {
     public class registered_staff
     {
+        
 
         [Key]
         public int StaffID { get; set; }
 
         
         [Required(ErrorMessage = "Field can't be empty")]
+        [DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "The email address is not valid")]
         public string Email { get; set; }
 
@@ -33,6 +36,7 @@ namespace GoLocal.Models
         public string LastName { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
+        [DataType(DataType.PostalCode)]
         public string ZipCode { get; set; }
         public string State { get; set; }
         [DataType(DataType.PhoneNumber)]
@@ -64,7 +68,9 @@ namespace GoLocal.Models
         public string ShoeSize { get; set; }
         public string Tattoos { get; set; }
         public string Piercings { get; set; }
+        [DataType(DataType.Currency)]
         public string DesiredHourlyRate { get; set; }
+        [DataType(DataType.Currency)]
         public string DesiredWeeklyRate { get; set; }
         public string SsnOrEin { get; set; }
         public string BusinessName { get; set; }
