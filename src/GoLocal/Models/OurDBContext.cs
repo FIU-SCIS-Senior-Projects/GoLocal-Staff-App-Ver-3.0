@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GoLocal.Models
@@ -22,32 +25,33 @@ namespace GoLocal.Models
             builder.Entity<registered_staff>().HasKey(m => m.StaffID);
 
             // shadow properties
-            //builder.Entity<registered_staff>().Property<DateTime>("UpdatedTimestamp");
+            builder.Entity<registered_staff>().Property<DateTime>("UpdatedTimestamp");
 
             base.OnModelCreating(builder);
         }
-        public override int SaveChanges()
+        public Task<int> SaveChanges<T>() where T : class
         {
             ChangeTracker.DetectChanges();
 
-            updateUpdatedProperty<registered_staff>();
+            updateUpdatedProperty<T>();
      
-            return base.SaveChanges();
+            return base.SaveChangesAsync(); ;
 
         }
 
-        private void updateUpdatedProperty<T>() where T : class
+
+
+        public void updateUpdatedProperty<T>() where T : class
         {
+            ChangeTracker.DetectChanges();
+
             var modifiedSourceInfo = ChangeTracker.Entries<T>().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
-            //foreach (var entry in modifiedSourceInfo)
-            //{
-            //    entry.Property("UpdatedTimestamp").CurrentValue = DateTime.UtcNow;
-            //}
-        }
-
-
-        
+            foreach (var entry in modifiedSourceInfo)
+            {
+                entry.Property("UpdatedTimestamp").CurrentValue = DateTime.UtcNow;
+            }
+        }        
 
     }
 }

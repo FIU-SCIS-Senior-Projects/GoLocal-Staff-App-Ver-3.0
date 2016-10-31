@@ -55,7 +55,7 @@ namespace GoLocal.Controllers
                     }else
                     {
                         _context.Add(staff);
-                        await _context.SaveChangesAsync();
+                        await _context.SaveChanges<registered_staff>();
 
                         return View("RequiredInfo");
                     }
@@ -69,9 +69,10 @@ namespace GoLocal.Controllers
             catch (Exception e)
             {
 
-                return View(staff);
+                return Error();
             }
         }
+
 
     }
 }

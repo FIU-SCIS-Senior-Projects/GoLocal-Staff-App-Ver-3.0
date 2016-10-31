@@ -9,7 +9,7 @@
 <h2>@ViewData["Title"].</h2>
 
 <div class="form_horizontal">
-    <form asp-controller="RequiredInfo" asp-action="RequiredInfo" method="post">
+    <form asp-controller="RequiredInfo" asp-action="RequiredInfo" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label asp-for="FirstName" class="col-md-2 control-label">First Name</label>
             <div class="col-md-10">
@@ -109,9 +109,9 @@
                     <option value="WV">WV</option>
                     <option value="WI">WI</option>
                     <option value="WY">WY</option>
-                  </select>
+                </select>
                 <span asp-validation-for="State" class="text-danger"></span>
-           </div>
+            </div>
         </div>
         <div class="form-group">
             <label asp-for="Phone" class="col-md-2 control-label">Phone</label>
@@ -141,10 +141,22 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10 ">
-                <button type="submit" class="btn-default ">Next</button>
+            <label asp-for="Gender" class="col-md-2 control-label">Picture</label>
+            <div class="col-md-10">
+                <input asp-for="Image" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+               @*<div class="col-md-offset-2">
+                    <button type="button" class="btn-default ">Upload</button>
+                </div>*@               
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 ">
+                <button type="submit">Next</button>
+            </div>
+        </div>
+
 
     </form>
 

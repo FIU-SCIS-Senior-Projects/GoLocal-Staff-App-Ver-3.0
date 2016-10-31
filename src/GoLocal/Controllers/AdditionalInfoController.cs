@@ -52,7 +52,7 @@ namespace GoLocal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AdditionalInfo([Bind("StaffType,NativeLanguage,SecondLanguage,ThirdLanguage,TypeDL,Ethnicity,Height,Weight,HairColor,EyeColor,ShirtSize,PantSize,ChestSize,WaistSize,HipSize, DressSize,ShoeSize,Tattoos,Piercings,DesiredHourlyRate,DesiredWeeklyRate,SsnOrEin, BusinessName,Travel,Insurance, BankRouting, AccountNumber")] StaffAdditionalInfo info)
+        public async Task<IActionResult> AdditionalInfo([Bind("StaffType,OtherDescription,NativeLanguage,SecondLanguage,ThirdLanguage,TypeDL,Ethnicity,Height,Weight,HairColor,EyeColor,ShirtSize,PantSize,ChestSize,WaistSize,HipSize, DressSize,ShoeSize,Tattoos,Piercings,DesiredHourlyRate,DesiredWeeklyRate,SsnOrEin, BusinessName,Travel,Insurance, BankRouting, AccountNumber, Resume")] StaffAdditionalInfo info)
         {
             FillStaffTypes();
 
@@ -69,7 +69,14 @@ namespace GoLocal.Controllers
                             staff.StaffType = info.StaffType;
                         }else
                         {
-                            staff.StaffType = info.OtherDescription;
+                            if (info.OtherDescription != null && info.OtherDescription != "")
+                            {
+                                staff.StaffType = info.OtherDescription;
+                            }else
+                            {
+                                staff.StaffType = info.StaffType;
+
+                            }
 
                         }
                         staff.NativeLanguage = info.NativeLanguage;
@@ -99,8 +106,8 @@ namespace GoLocal.Controllers
                         staff.Insurance = info.Insurance;
                         staff.BankRouting = info.BankRouting;
                         staff.AccountNumber = info.AccountNumber;
-                        
-                        await _context.SaveChangesAsync();
+                        staff.Resume = info.Resume;
+                        await _context.SaveChanges<registered_staff>();
                         ViewBag.ConfirmationMessage = "Your account has been created!";
                         ViewData["staffID"] = "Staff ID: " + staff.StaffID;
                         
@@ -108,7 +115,7 @@ namespace GoLocal.Controllers
                     }
                     catch (Exception e)
                     {
-                        return View(info);
+                        return Error();
 
                     }
                 }

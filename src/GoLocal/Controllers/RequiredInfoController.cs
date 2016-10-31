@@ -7,7 +7,8 @@ using GoLocal.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-
+using System.IO;
+using System.Web;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GoLocal.Controllers
@@ -65,8 +66,26 @@ namespace GoLocal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RequiredInfo([Bind("FirstName,MiddleInitial,LastName,Address,City,ZipCode,State,Phone,DateOfBirth,Gender")] StaffRequiredInfo info)
+        public async Task<IActionResult> RequiredInfo([Bind("FirstName,MiddleInitial,LastName,Address,City,ZipCode,State,Phone,DateOfBirth,Gender, Image")] StaffRequiredInfo info)
         {
+            var validImageTypes = new string[]
+            {
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+            };
+
+            if(info.Image == null || info.Image.Length == 0)
+            {
+                return View(info);
+            }
+            if (!validImageTypes.Contains(info.Image.ContentType))
+            {
+                ModelState.AddModelError("Image", "Please choose either a GIF, JPG or PNG image.");
+            }
+
+
             if (ModelState.IsValid)
             {
                 if (_context.registered_staff.Count() > 0)
@@ -84,7 +103,14 @@ namespace GoLocal.Controllers
                         staff.Phone = info.Phone;
                         staff.DateOfBirth = info.DateOfBirth;
                         staff.Gender = info.Gender;
-                        await _context.SaveChangesAsync();
+                        staff.ImageName = info.Image.FileName;
+
+                        var uploadDir = "~/uploads";
+                        var imagePath = Path.Combine(HttpContext.current)
+
+
+                        await _context.SaveChanges<registered_staff>();                        
+
 
                         FillStaffTypes();
 
@@ -92,8 +118,8 @@ namespace GoLocal.Controllers
                     }
                     catch (Exception e)
                     {
-                       
-                        return View(info);
+
+                        return Error();
 
                     }
                 }    

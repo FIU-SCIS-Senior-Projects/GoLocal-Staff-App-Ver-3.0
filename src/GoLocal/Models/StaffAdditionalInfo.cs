@@ -33,5 +33,6 @@
         public string Insurance { get; set; }
         public string BankRouting { get; set; }
         public string AccountNumber { get; set; }
+        public string Resume { get; set; }
     }
 }

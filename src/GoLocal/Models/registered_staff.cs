@@ -44,6 +44,7 @@ namespace GoLocal.Models
         [DataType(DataType.Date)]
         public string DateOfBirth { get; set; }
         public string Gender { get; set; }
+        public string ImageName { get; set; }
 
 
 
@@ -87,7 +88,6 @@ namespace GoLocal.Models
         public string ForgotPasswordCode { get; set; }
         public int ForgotPasswordRequests { get; set; }
         public int LoginRequests { get; set; }
-        public string ImageName { get; set; }
         public int Status { get; set; }
         public string Hash { get; set; }
         public int Profile { get; set; }
