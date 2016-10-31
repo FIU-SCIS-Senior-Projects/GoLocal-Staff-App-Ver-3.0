@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GoLocal.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.IO;
-using System.Web;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GoLocal.Controllers
@@ -17,12 +16,14 @@ namespace GoLocal.Controllers
     public class RequiredInfoController : Controller
     {
         private OurDBContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
         
 
-        public RequiredInfoController(OurDBContext dbCon)
+        public RequiredInfoController(OurDBContext dbCon, IHostingEnvironment hostingEnvironment)
         {
 
             _context = dbCon;
+            _hostingEnvironment = hostingEnvironment;
         }
 
 
@@ -105,9 +106,10 @@ namespace GoLocal.Controllers
                         staff.Gender = info.Gender;
                         staff.ImageName = info.Image.FileName;
 
-                        var uploadDir = "~/uploads";
-                        var imagePath = Path.Combine(HttpContext.current)
-
+                        var uploadDir = "uploads";
+                        var imagePath = Path.Combine(_hostingEnvironment.ContentRootPath,uploadDir, info.Image.FileName);
+                        await info.Image.CopyToAsync(new FileStream(imagePath,FileMode.Create, FileAccess.ReadWrite));
+                       
 
                         await _context.SaveChanges<registered_staff>();                        
 
