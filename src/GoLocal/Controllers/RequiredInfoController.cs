@@ -106,7 +106,7 @@ namespace GoLocal.Controllers
                         staff.Gender = info.Gender;
                         staff.ImageName = info.Image.FileName;
 
-                        var uploadDir = "uploads";
+                        var uploadDir = "uploads/images";
                         var imagePath = Path.Combine(_hostingEnvironment.ContentRootPath,uploadDir, info.Image.FileName);
                         await info.Image.CopyToAsync(new FileStream(imagePath,FileMode.Create, FileAccess.ReadWrite));
                        

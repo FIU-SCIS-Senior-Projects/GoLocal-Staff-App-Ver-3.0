@@ -1,4 +1,6 @@
-﻿namespace GoLocal.Models
+﻿using Microsoft.AspNetCore.Http;
+
+namespace GoLocal.Models
 {
     public class StaffAdditionalInfo
     {
@@ -33,6 +35,8 @@
         public string Insurance { get; set; }
         public string BankRouting { get; set; }
         public string AccountNumber { get; set; }
+        public string VideoName { get; set; }
+        public IFormFile Video { get; set; }
         public string Resume { get; set; }
     }
 }

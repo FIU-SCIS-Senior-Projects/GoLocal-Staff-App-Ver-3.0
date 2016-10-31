@@ -79,11 +79,13 @@ namespace GoLocal.Models
         public string Insurance { get; set; }
         public string BankRouting { get; set; }
         public string AccountNumber { get; set; }
+        public string VideoName { get; set; }
+        public string Resume { get; set; }
 
 
         public int EthnicityCode { get; set; }
         public string InsuranceDocuments { get; set; }
-        public string Resume { get; set; }
+        
         public string AccountLocked { get; set; }
         public string ForgotPasswordCode { get; set; }
         public int ForgotPasswordRequests { get; set; }
