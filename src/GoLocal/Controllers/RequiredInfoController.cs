@@ -50,7 +50,7 @@ namespace GoLocal.Controllers
                 
                 return View(new StaffAdditionalInfo());
             }
-            catch (Exception e) { return View(); }
+            catch (Exception) { return View(); }
             
         }
 
@@ -118,7 +118,7 @@ namespace GoLocal.Controllers
 
                         return RedirectToAction("AdditionalInfo");
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
 
                         return Error();

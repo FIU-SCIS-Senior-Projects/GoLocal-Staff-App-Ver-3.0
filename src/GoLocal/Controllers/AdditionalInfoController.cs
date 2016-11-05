@@ -64,11 +64,15 @@ namespace GoLocal.Controllers
                     "video/flv",
                     "video/wmv",
                     "video/mov",
-                    "video/mp4"
+                    "video/mp4",
+                    "video/quicktime"
             };
-            if (!validVideoTypes.Contains(info.Video.ContentType))
+            if (info.Video != null)
             {
-                ModelState.AddModelError("Video", "Please choose either a AVI, FLV, WMV, MOV or MP4 video.");
+                if (!validVideoTypes.Contains(info.Video.ContentType))
+                {
+                    ModelState.AddModelError("Video", "Please choose either a AVI, FLV, WMV, MOV, QUICKTIME or MP4 video.");
+                }
             }
 
 
@@ -127,11 +131,14 @@ namespace GoLocal.Controllers
                         staff.AccountNumber = info.AccountNumber;
                         staff.Resume = info.Resume;
 
-                        staff.VideoName = info.Video.FileName;
-
-                        var uploadDir = "uploads/videos";
-                        var videoPath = Path.Combine(_hostingEnvironment.ContentRootPath, uploadDir, info.Video.FileName);
-                        await info.Video.CopyToAsync(new FileStream(videoPath, FileMode.Create, FileAccess.ReadWrite));
+                        if (info.Video != null)
+                        {
+                            staff.VideoName = info.Video.FileName;
+                            
+                            var uploadDir = "uploads/videos";
+                            var videoPath = Path.Combine(_hostingEnvironment.ContentRootPath, uploadDir, info.Video.FileName);
+                            await info.Video.CopyToAsync(new FileStream(videoPath, FileMode.Create, FileAccess.ReadWrite));
+                        }
 
                         await _context.SaveChanges<registered_staff>();
                         ViewBag.ConfirmationMessage = "Your account has been created!";
@@ -139,7 +146,7 @@ namespace GoLocal.Controllers
                         
                         return View("AccountCreated");
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         return Error();
 

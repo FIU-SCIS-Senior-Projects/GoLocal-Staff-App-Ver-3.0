@@ -66,7 +66,7 @@ namespace GoLocal.Controllers
                     return View(staff);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
                 return Error();
