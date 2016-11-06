@@ -17,14 +17,12 @@ namespace GoLocal.Controllers
         private OurDBContext _context;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
 
-
-
-        public AdditionalInfoController(Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
-        {
+        public AdditionalInfoController(Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)        {
 
             _context = OurDBContextFactory.Create();
             _hostingEnvironment = hostingEnvironment;
         }
+
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -58,26 +56,46 @@ namespace GoLocal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdditionalInfo([Bind("StaffType,OtherDescription,NativeLanguage,SecondLanguage,ThirdLanguage,TypeDL,Ethnicity,Height,Weight,HairColor,EyeColor,ShirtSize,PantSize,ChestSize,WaistSize,HipSize, DressSize,ShoeSize,Tattoos,Piercings,DesiredHourlyRate,DesiredWeeklyRate,SsnOrEin, BusinessName,Travel,Insurance, BankRouting, AccountNumber, Video, Resume")] StaffAdditionalInfo info)
         {
+            if (info.SsnOrEin != null && info.SsnOrEin.Length < 9)
+            {
+                ModelState.AddModelError("SsnOrEin", "Invalid SSN.");
+
+            }
             var validVideoTypes = new string[]
             {
                     "video/avi",
-                    "video/flv",
-                    "video/wmv",
-                    "video/mov",
+                    "video/msvideo",
+                    "video/x-msvideo",
+                    "video/x-flv",
+                    "video/x-ms-wmv",
                     "video/mp4",
                     "video/quicktime"
+            };
+            var validResumeTypes = new string[]
+            {
+                    "application/msword",
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    "text/plain",
+                    "application/pdf",
+                    "application/rtf"
+                    
             };
             if (info.Video != null)
             {
                 if (!validVideoTypes.Contains(info.Video.ContentType))
                 {
-                    ModelState.AddModelError("Video", "Please choose either a AVI, FLV, WMV, MOV, QUICKTIME or MP4 video.");
+                    ModelState.AddModelError("Video", "Please choose either a AVI, FLV, WMV, MOV, or MP4 video.");
+                }
+            }
+            if (info.Resume != null)
+            {
+                if (!validResumeTypes.Contains(info.Resume.ContentType))
+                {
+                    ModelState.AddModelError("Resume", "Please choose either a DOC, DOCX, TXT, PDF, or RTF document.");
                 }
             }
 
-
-            FillStaffTypes();
-            
+            FillStaffTypes();            
 
             if (ModelState.IsValid)
             {
@@ -98,7 +116,6 @@ namespace GoLocal.Controllers
                             }else
                             {
                                 staff.StaffType = info.StaffType;
-
                             }
 
                         }
@@ -129,14 +146,34 @@ namespace GoLocal.Controllers
                         staff.Insurance = info.Insurance;
                         staff.BankRouting = info.BankRouting;
                         staff.AccountNumber = info.AccountNumber;
-                        staff.Resume = info.Resume;
+
+                        if (info.Resume != null)
+                        {
+                            staff.Resume = info.Resume.FileName;
+                            var uploadDir = "uploads/resumes/" + staff.StaffID + "/";
+                            var folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, uploadDir);
+
+                            if (!Directory.Exists(folderPath))
+                            {
+                                Directory.CreateDirectory(folderPath);
+                            }
+
+                            var resumePath = Path.Combine(_hostingEnvironment.ContentRootPath, folderPath, info.Resume.FileName);
+                            await info.Resume.CopyToAsync(new FileStream(resumePath, FileMode.Create, FileAccess.ReadWrite));
+                        }
 
                         if (info.Video != null)
                         {
-                            staff.VideoName = info.Video.FileName;
-                            
-                            var uploadDir = "uploads/videos";
-                            var videoPath = Path.Combine(_hostingEnvironment.ContentRootPath, uploadDir, info.Video.FileName);
+                            staff.VideoName = info.Video.FileName;                            
+                            var uploadDir = "uploads/videos/" + staff.StaffID + "/";
+                            var folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, uploadDir);
+
+                            if (!Directory.Exists(folderPath))
+                            {
+                                Directory.CreateDirectory(folderPath);
+                            }
+
+                            var videoPath = Path.Combine(_hostingEnvironment.ContentRootPath, folderPath, info.Video.FileName);
                             await info.Video.CopyToAsync(new FileStream(videoPath, FileMode.Create, FileAccess.ReadWrite));
                         }
 
@@ -146,10 +183,9 @@ namespace GoLocal.Controllers
                         
                         return View("AccountCreated");
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         return Error();
-
                     }
                 }
             }

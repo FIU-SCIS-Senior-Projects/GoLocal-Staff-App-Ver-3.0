@@ -7,8 +7,7 @@
 
     <h2>@ViewData["Title"].</h2>
 
-    <script asp-src-include="~/lib/jquery/dist/jquery.js"></script>
-      
+    <script asp-src-include="~/lib/jquery/dist/jquery.js"></script>      
 
     <div class="form_horizontal">
         <form asp-controller="AdditionalInfo" asp-action="AdditionalInfo" method="post" enctype = "multipart/form-data">
@@ -19,16 +18,13 @@
                     <select asp-for="StaffType" class="form-control" id="type" asp-items="ViewBag.StaffTypes"> <option></option> </select>
                     <span asp-validation-for="StaffType" class="text-danger"></span>
                 </div>
-            </div>    
-
+            </div> 
             <div class="form-group" id="other">
                 <label asp-for="OtherDescription" class="col-md-2 control-label">Enter Description</label>
                     <div class="col-md-10">
                         <input asp-for="OtherDescription" class="form-control" />
                     </div>
             </div>
-                       
-
             <div class="form-group">
                 <label asp-for="NickName" class="col-md-2 control-label">Nick Name</label>
                 <div class="col-md-10">
@@ -190,7 +186,8 @@
             <div class="form-group">
                 <label asp-for="Resume" class="col-md-2 control-label">Resume</label>
                 <div class="col-md-10">
-                    <textarea asp-for="Resume" col="40" rows="10" class="form-control" ></textarea>
+                    <input asp-for="Resume" class="form-control" />
+                    <span asp-validation-for="Resume" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group">
@@ -198,7 +195,6 @@
                     <button type="submit" class="btn-default">Submit</button>
                 </div>
             </div>
-
         </form>
         @section scripts{
             <script>

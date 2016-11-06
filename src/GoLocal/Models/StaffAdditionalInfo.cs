@@ -37,6 +37,6 @@ namespace GoLocal.Models
         public string AccountNumber { get; set; }
         public string VideoName { get; set; }
         public IFormFile Video { get; set; }
-        public string Resume { get; set; }
+        public IFormFile Resume { get; set; }
     }
 }

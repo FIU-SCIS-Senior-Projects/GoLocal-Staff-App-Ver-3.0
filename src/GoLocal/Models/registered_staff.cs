@@ -10,8 +10,6 @@ namespace GoLocal.Models
 {
     public class registered_staff
     {
-        
-
         [Key]
         public int StaffID { get; set; }
 
@@ -28,6 +26,7 @@ namespace GoLocal.Models
         [NotMapped]
         [Required(ErrorMessage = "Field can't be empty")]
         [DataType(DataType.Password)]
+        [MinLength(7, ErrorMessage = "Password must contain at least 7 characters")]
         [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
         public string ConfirmPassword { get; set; }
 

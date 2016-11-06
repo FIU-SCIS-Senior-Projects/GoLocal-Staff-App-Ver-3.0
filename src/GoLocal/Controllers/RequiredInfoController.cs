@@ -64,12 +64,19 @@ namespace GoLocal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RequiredInfo([Bind("FirstName,MiddleInitial,LastName,Address,City,ZipCode,State,Phone,DateOfBirth,Gender, Image")] StaffRequiredInfo info)
         {
-            var validImageTypes = new string[]
+            if (info.Phone != null && info.Phone.Length < 10)
             {
-                    "image/gif",
-                    "image/jpeg",
+                ModelState.AddModelError("Phone", "Invalid phone number.");
+
+            }
+            var validImageTypes = new string[]
+            {                   
                     "image/pjpeg",
-                    "image/png"
+                    "image/jpeg",
+                    "image/tiff",
+                    "image/gif",
+                    "image/png",
+
             };
 
             if (info.Image == null || info.Image.Length == 0)
@@ -78,7 +85,19 @@ namespace GoLocal.Controllers
             }
             if (!validImageTypes.Contains(info.Image.ContentType))
             {
-                ModelState.AddModelError("Image", "Please choose either a GIF, JPG or PNG image.");
+                ModelState.AddModelError("Image", "Please choose either a JPG, TIF,  GIF or PNG image.");
+            }
+            if (info.DateOfBirth == null)
+            {
+                return View(info);
+            }else
+            {
+                DateTime dt = Convert.ToDateTime(info.DateOfBirth);
+                if (dt > DateTime.Today)
+                {
+                    ModelState.AddModelError("DateOfBirth", "Date of birth must be before today's date ");
+                }
+
             }
             
             if (ModelState.IsValid)
@@ -87,7 +106,6 @@ namespace GoLocal.Controllers
                 {
                     try
                     {
-                        //var modifiedSourceInfo = _context.ChangeTracker.Entries<registered_staff>().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
                         registered_staff staff = _context.registered_staff.Last();
                         staff.MiddleInitial = info.MiddleInitial;
                         staff.LastName = info.LastName;
@@ -100,8 +118,15 @@ namespace GoLocal.Controllers
                         staff.Gender = info.Gender;
                         staff.ImageName = info.Image.FileName;
 
-                        var uploadDir = "uploads/images";
-                        var imagePath = Path.Combine(_hostingEnvironment.ContentRootPath,uploadDir, info.Image.FileName);
+                        var uploadDir = "uploads/images/" + staff.StaffID + "/";
+                        var folderPath = Path.Combine(_hostingEnvironment.ContentRootPath,uploadDir);
+
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+
+                        var imagePath = Path.Combine(_hostingEnvironment.ContentRootPath, folderPath, info.Image.FileName);
                         await info.Image.CopyToAsync(new FileStream(imagePath,FileMode.Create, FileAccess.ReadWrite));                       
 
                         await _context.SaveChanges<registered_staff>();     
