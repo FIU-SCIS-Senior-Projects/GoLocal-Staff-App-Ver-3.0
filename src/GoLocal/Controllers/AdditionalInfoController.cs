@@ -19,10 +19,10 @@ namespace GoLocal.Controllers
 
 
 
-        public AdditionalInfoController(OurDBContext dbCon, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+        public AdditionalInfoController(Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
         {
 
-            _context = dbCon;
+            _context = OurDBContextFactory.Create();
             _hostingEnvironment = hostingEnvironment;
         }
         // GET: /<controller>/

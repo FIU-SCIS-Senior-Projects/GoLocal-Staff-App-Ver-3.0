@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using GoLocal.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,18 +14,20 @@ namespace GoLocal.Controllers
 {
     public class SignUpController : Controller
     {
+        //private readonly ILogger<SignUpController> _logger;
         private OurDBContext _context;
 
-        public SignUpController(OurDBContext context)
+        public SignUpController()
         {
-            _context = context;
-            //_context = OurDBContextFactory.Create();
+            _context = OurDBContextFactory.Create(); 
         }
         // GET: /<controller>/
         public IActionResult Index()
         {
             return View();
         }
+
+        [HttpGet]
         public IActionResult SignUp()
         {
             return View();
@@ -38,6 +41,7 @@ namespace GoLocal.Controllers
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUp([Bind("Email,Password,ConfirmPassword")] registered_staff staff)
@@ -48,14 +52,16 @@ namespace GoLocal.Controllers
                 {
                     if (_context.registered_staff.Any(info => info.Email == staff.Email))
                     {
-                        ModelState.AddModelError("", "The email address you entered is already in use");
+                        ModelState.AddModelError("Email", "The email address you entered is already in use");
                         ViewData["Message"] = "Already a member? Log In";
                         return View(staff);
 
-                    }else
+                    }
+                    else
                     {
                         _context.Add(staff);
                         await _context.SaveChanges<registered_staff>();
+
 
                         return View("RequiredInfo");
                     }
@@ -68,11 +74,9 @@ namespace GoLocal.Controllers
             }
             catch (Exception)
             {
-
                 return Error();
             }
         }
-
 
     }
 }

@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Hosting;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using MySql.Data.MySqlClient;
-using Microsoft.Extensions.Configuration;
-using GoLocal.Models;
 
 namespace GoLocal
 {

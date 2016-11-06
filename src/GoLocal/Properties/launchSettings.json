@@ -15,10 +15,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "GoLocal": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "http://localhost:5000",
+    "web": {
+      "commandName": "web",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

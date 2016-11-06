@@ -19,10 +19,11 @@ namespace GoLocal.Controllers
         private readonly IHostingEnvironment _hostingEnvironment;
         
 
-        public RequiredInfoController(OurDBContext dbCon, IHostingEnvironment hostingEnvironment)
+        public RequiredInfoController(IHostingEnvironment hostingEnvironment)
         {
 
-            _context = dbCon;
+            // _context = dbCon;
+            _context = OurDBContextFactory.Create();
             _hostingEnvironment = hostingEnvironment;
         }
 
@@ -77,14 +78,14 @@ namespace GoLocal.Controllers
                     "image/png"
             };
 
-            if(info.Image == null || info.Image.Length == 0)
-            {
-                return View(info);
-            }
-            if (!validImageTypes.Contains(info.Image.ContentType))
-            {
-                ModelState.AddModelError("Image", "Please choose either a GIF, JPG or PNG image.");
-            }
+           // if(info.Image == null || info.Image.Length == 0)
+            //{
+              //  return View(info);
+            //}
+            //if (!validImageTypes.Contains(info.Image.ContentType))
+            //{
+              //  ModelState.AddModelError("Image", "Please choose either a GIF, JPG or PNG image.");
+            //}
 
 
             if (ModelState.IsValid)
@@ -104,11 +105,11 @@ namespace GoLocal.Controllers
                         staff.Phone = info.Phone;
                         staff.DateOfBirth = info.DateOfBirth;
                         staff.Gender = info.Gender;
-                        staff.ImageName = info.Image.FileName;
+                        //staff.ImageName = info.Image.FileName;
 
                         var uploadDir = "uploads/images";
-                        var imagePath = Path.Combine(_hostingEnvironment.ContentRootPath,uploadDir, info.Image.FileName);
-                        await info.Image.CopyToAsync(new FileStream(imagePath,FileMode.Create, FileAccess.ReadWrite));
+                        //var imagePath = Path.Combine(_hostingEnvironment.ContentRootPath,uploadDir, info.Image.FileName);
+                        //await info.Image.CopyToAsync(new FileStream(imagePath,FileMode.Create, FileAccess.ReadWrite));
                        
 
                         await _context.SaveChanges<registered_staff>();                        
