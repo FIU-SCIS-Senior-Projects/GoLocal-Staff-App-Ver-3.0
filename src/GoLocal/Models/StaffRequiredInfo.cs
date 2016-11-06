@@ -32,7 +32,7 @@ namespace GoLocal.Models
         [Required(ErrorMessage = "Field can't be empty")]
         public string Gender { get; set; }
         //public string ImageName { get; set; }
-        //[Required(ErrorMessage = "Field can't be empty")]
+        [Required(ErrorMessage = "Field can't be empty")]
         [DataType(DataType.Upload)]
         public IFormFile Image { get; set; }
     }

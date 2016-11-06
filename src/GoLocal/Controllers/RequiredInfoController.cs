@@ -12,22 +12,18 @@ using Microsoft.AspNetCore.Http;
 
 namespace GoLocal.Controllers
 {
-
     public class RequiredInfoController : Controller
     {
         private OurDBContext _context;
-        private readonly IHostingEnvironment _hostingEnvironment;
-        
+        private readonly IHostingEnvironment _hostingEnvironment;        
 
         public RequiredInfoController(IHostingEnvironment hostingEnvironment)
         {
-
             // _context = dbCon;
             _context = OurDBContextFactory.Create();
             _hostingEnvironment = hostingEnvironment;
         }
-
-
+        
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -46,9 +42,7 @@ namespace GoLocal.Controllers
         {
             try
             {
-
-                FillStaffTypes();
-                
+                FillStaffTypes();                
                 return View(new StaffAdditionalInfo());
             }
             catch (Exception) { return View(); }
@@ -78,16 +72,15 @@ namespace GoLocal.Controllers
                     "image/png"
             };
 
-           // if(info.Image == null || info.Image.Length == 0)
-            //{
-              //  return View(info);
-            //}
-            //if (!validImageTypes.Contains(info.Image.ContentType))
-            //{
-              //  ModelState.AddModelError("Image", "Please choose either a GIF, JPG or PNG image.");
-            //}
-
-
+            if (info.Image == null || info.Image.Length == 0)
+            {
+                return View(info);
+            }
+            if (!validImageTypes.Contains(info.Image.ContentType))
+            {
+                ModelState.AddModelError("Image", "Please choose either a GIF, JPG or PNG image.");
+            }
+            
             if (ModelState.IsValid)
             {
                 if (_context.registered_staff.Count() > 0)
@@ -105,15 +98,13 @@ namespace GoLocal.Controllers
                         staff.Phone = info.Phone;
                         staff.DateOfBirth = info.DateOfBirth;
                         staff.Gender = info.Gender;
-                        //staff.ImageName = info.Image.FileName;
+                        staff.ImageName = info.Image.FileName;
 
                         var uploadDir = "uploads/images";
-                        //var imagePath = Path.Combine(_hostingEnvironment.ContentRootPath,uploadDir, info.Image.FileName);
-                        //await info.Image.CopyToAsync(new FileStream(imagePath,FileMode.Create, FileAccess.ReadWrite));
-                       
+                        var imagePath = Path.Combine(_hostingEnvironment.ContentRootPath,uploadDir, info.Image.FileName);
+                        await info.Image.CopyToAsync(new FileStream(imagePath,FileMode.Create, FileAccess.ReadWrite));                       
 
-                        await _context.SaveChanges<registered_staff>();                        
-
+                        await _context.SaveChanges<registered_staff>();     
 
                         FillStaffTypes();
 
@@ -121,13 +112,10 @@ namespace GoLocal.Controllers
                     }
                     catch (Exception)
                     {
-
                         return Error();
-
                     }
                 }    
             }
-
             return View(info);
         }
     }
