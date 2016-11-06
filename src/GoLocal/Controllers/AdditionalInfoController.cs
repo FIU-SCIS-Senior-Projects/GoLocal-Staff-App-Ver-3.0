@@ -104,18 +104,25 @@ namespace GoLocal.Controllers
                     try
                     {
                         registered_staff staff = _context.registered_staff.Last();
+                        staff_type type = _context.staff_type.Last();
 
                         if (info.StaffType != "Other")
                         {
                             staff.StaffType = info.StaffType;
-                        }else
+                            type.UpdateProperty(info.StaffType);
+                        }
+                        else
                         {
                             if (info.OtherDescription != null && info.OtherDescription != "")
                             {
                                 staff.StaffType = info.OtherDescription;
-                            }else
+                                type.UpdateProperty(info.StaffType);
+                                type.UpdateProperty("Other_Description");
+                            }
+                            else
                             {
                                 staff.StaffType = info.StaffType;
+                                type.UpdateProperty(info.StaffType);
                             }
 
                         }
@@ -178,6 +185,8 @@ namespace GoLocal.Controllers
                         }
 
                         await _context.SaveChanges<registered_staff>();
+                        await _context.SaveChanges<staff_type>();
+
                         ViewBag.ConfirmationMessage = "Your account has been created!";
                         ViewData["staffID"] = "Staff ID: " + staff.StaffID;
                         

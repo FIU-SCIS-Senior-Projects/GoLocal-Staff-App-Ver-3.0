@@ -62,6 +62,10 @@ namespace GoLocal.Controllers
                         _context.Add(staff);
                         await _context.SaveChanges<registered_staff>();
 
+                        //var type = new staff_type(staff.StaffID);
+                        _context.staff_type.Add(new staff_type(staff.StaffID));
+                        await _context.SaveChanges<staff_type>();
+
 
                         return View("RequiredInfo");
                     }
@@ -72,7 +76,7 @@ namespace GoLocal.Controllers
                     return View(staff);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return Error();
             }

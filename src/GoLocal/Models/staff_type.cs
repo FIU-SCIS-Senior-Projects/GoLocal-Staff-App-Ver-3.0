@@ -40,7 +40,77 @@ namespace GoLocal.Models
         public int Electrician { get; set; }
         public int Graphic_Designer { get; set; }
         public int Sound_Engineer{ get; set; }
-      
 
+        public staff_type(int staffID)
+        {
+            this.StaffID = staffID;
+        }
+        public staff_type()
+        {
+        }
+
+        public void UpdateProperty(string staffType)
+        {
+            switch(staffType)
+            {
+                case "Brand_Ambassador":
+                    Brand_Ambassador = 1;
+                    break;
+                case "Dancer":
+                    Dancer = 1;
+                    break;
+                case "Field_Marketing_Manager":
+                    Field_Marketing_Manager = 1;
+                    break;
+                case "Flyer_Distributor":
+                    Flyer_Distributor = 1;
+                    break;
+                case "Model":
+                    Model = 1;
+                    break;
+                case "Production_Assistant":
+                    Production_Assistant = 1;
+                    break;
+                case "Sales_Executive":
+                    Sales_Executive = 1;
+                    break;
+                case "Waiter_Waitress":
+                    Waiter_Waitress = 1;
+                    break;
+                case "DJ":
+                    DJ = 1;
+                    break;
+                case "Catering_Company":
+                    Catering_Company = 1;
+                    break;
+                case "Live_Band":
+                    Live_Band = 1;
+                    break;
+                case "Other":
+                    Other = 1;
+                    break;
+                case "Other_Description":
+                    Other_Description = 1;
+                    break;
+                case "Senior_Marketing_Manager":
+                    Senior_Marketing_Manager = 1;
+                    break;
+                case "Bartender":
+                    Bartender = 1;
+                    break;
+                case "Photographer":
+                    Photographer = 1;
+                    break;
+                case "Electrician":
+                    Electrician = 1;
+                    break;
+                case "Graphic_Designer":
+                    Graphic_Designer = 1;
+                    break;
+                case "Sound_Engineer":
+                    Sound_Engineer = 1;
+                    break;
+            }
+        }
     }
 }

@@ -23,9 +23,12 @@ namespace GoLocal.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<registered_staff>().HasKey(m => m.StaffID);
+            builder.Entity<staff_type>().HasKey(m => m.StaffID);
+
 
             // shadow properties
             builder.Entity<registered_staff>().Property<DateTime>("UpdatedTimestamp");
+            builder.Entity<staff_type>().Property<DateTime>("UpdatedTimestamp");
 
             base.OnModelCreating(builder);
         }
