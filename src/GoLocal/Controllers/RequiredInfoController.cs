@@ -107,6 +107,7 @@ namespace GoLocal.Controllers
                     try
                     {
                         registered_staff staff = _context.registered_staff.Last();
+                        staff.FirstName = info.FirstName;
                         staff.MiddleInitial = info.MiddleInitial;
                         staff.LastName = info.LastName;
                         staff.Address = info.Address;
