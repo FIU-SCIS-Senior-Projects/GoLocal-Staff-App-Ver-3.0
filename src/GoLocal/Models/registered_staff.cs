@@ -15,8 +15,7 @@ namespace GoLocal.Models
 
         
         [Required(ErrorMessage = "Field can't be empty")]
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress(ErrorMessage = "The email address is not valid")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "The email address is not valid")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Field can't be empty")]
@@ -55,15 +54,15 @@ namespace GoLocal.Models
         public string ThirdLanguage { get; set; }
         public string TypeDL { get; set; }
         public string Ethnicity { get; set; }
-        public string Height { get; set; }
-        public string Weight { get; set; }
+        public double Height { get; set; }
+        public double Weight { get; set; }
         public string HairColor { get; set; }
         public string EyeColor { get; set; }
         public string ShirtSize { get; set; }
         public string PantSize { get; set; }
-        public string ChestSize { get; set; }
-        public string WaistSize { get; set; }
-        public string HipSize { get; set; }
+        public double ChestSize { get; set; }
+        public double WaistSize { get; set; }
+        public double HipSize { get; set; }
         public string DressSize { get; set; }
         public string ShoeSize { get; set; }
         public string Tattoos { get; set; }

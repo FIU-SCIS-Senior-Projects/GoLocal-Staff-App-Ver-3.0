@@ -24,7 +24,8 @@ namespace GoLocal.Models
         public string City { get; set; }
 
         [Required(ErrorMessage = "Field can't be empty")]
-        [DataType(DataType.PostalCode)]
+        [RegularExpression(@"^\d{5}$", ErrorMessage = "Invalid Zip Code format")]
+
         public string ZipCode { get; set; }
 
         [Required(ErrorMessage = "Field can't be empty")]

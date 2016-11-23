@@ -7,6 +7,7 @@ using GoLocal.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Reflection;
 using System.IO;
+using System.Text.RegularExpressions;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -131,16 +132,53 @@ namespace GoLocal.Controllers
                         staff.ThirdLanguage = info.ThirdLanguage;
                         staff.TypeDL = info.TypeDL;
                         staff.Ethnicity = info.Ethnicity;
-                        staff.Height = info.Height;
-                        staff.Weight = info.Weight;
+                        if (info.Height != null)
+                        {
+                            var h = info.Height.Split('\'')[0] + "." + info.Height.Split('\'')[1].Split('\"')[0];
+                            staff.Height = Double.Parse(h);
+
+                        }
+                        else
+                        {
+                            staff.Height = 0.0;
+                        }
+                        if (info.Weight != null)
+                        {
+                            staff.Weight = Double.Parse(info.Weight);
+                        }
+                        else
+                        {
+                            staff.Weight = 0.0;
+                        }
                         staff.HairColor = info.HairColor;
                         staff.EyeColor = info.EyeColor;
                         staff.ShirtSize = info.ShirtSize;
                         staff.PantSize = info.PantSize;
-                        staff.ChestSize = info.ChestSize;
+                        if (info.ChestSize != null)
+                        {
+                            staff.ChestSize = Double.Parse(info.ChestSize);
+                        }
+                        else
+                        {
+                            staff.ChestSize = 0.0;
+                        }
+                        if (info.WaistSize != null)
+                        {
+                            staff.WaistSize = Double.Parse(info.WaistSize);
+                        }
+                        else
+                        {
+                            staff.WaistSize = 0.0;
+                        }
+                        if (info.HipSize != null)
+                        {
+                            staff.HipSize = Double.Parse(info.HipSize);
+                        }
+                        else
+                        {
+                            staff.HipSize = 0.0;
+                        }
                         staff.NickName = info.NickName;
-                        staff.WaistSize = info.WaistSize;
-                        staff.HipSize = info.HipSize;
                         staff.DressSize = info.DressSize;
                         staff.ShoeSize = info.ShoeSize;
                         staff.Tattoos = info.Tattoos;
