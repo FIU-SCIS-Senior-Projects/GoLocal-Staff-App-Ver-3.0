@@ -354,10 +354,10 @@ session_start();
                           }
                           if ($language == "on" && $altlanguage != "")
                           {
-                              $sql .= "nativeLanguage = '$altlanguage' or secondLanguage = '$altlanguage' or thirdLanguage = '$altlanguage' ";
+                              $sql .= "(nativeLanguage = '$altlanguage' or secondLanguage = '$altlanguage' or thirdLanguage = '$altlanguage') ";
                           }else
                           {
-                              $sql .= "nativeLanguage = '$language' or secondLanguage = '$language' or thirdLanguage = '$language' ";
+                              $sql .= "(nativeLanguage = '$language' or secondLanguage = '$language' or thirdLanguage = '$language') ";
 
                           }
 
