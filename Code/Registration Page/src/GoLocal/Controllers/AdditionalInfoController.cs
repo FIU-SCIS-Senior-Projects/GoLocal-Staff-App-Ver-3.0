@@ -204,7 +204,10 @@ namespace GoLocal.Controllers
                             }
 
                             var resumePath = Path.Combine(_hostingEnvironment.ContentRootPath, folderPath, info.Resume.FileName);
-                            await info.Resume.CopyToAsync(new FileStream(resumePath, FileMode.Create, FileAccess.ReadWrite));
+                            using (FileStream f = new FileStream(resumePath, FileMode.Create, FileAccess.ReadWrite))
+                            {
+                                await info.Resume.CopyToAsync(f);
+                            }
                         }
 
                         if (info.Video != null)
@@ -219,7 +222,10 @@ namespace GoLocal.Controllers
                             }
 
                             var videoPath = Path.Combine(_hostingEnvironment.ContentRootPath, folderPath, info.Video.FileName);
-                            await info.Video.CopyToAsync(new FileStream(videoPath, FileMode.Create, FileAccess.ReadWrite));
+                            using (FileStream f = new FileStream(videoPath, FileMode.Create, FileAccess.ReadWrite))
+                            {
+                                await info.Video.CopyToAsync(f);
+                            }
                         }
 
                         await _context.SaveChanges<registered_staff>();

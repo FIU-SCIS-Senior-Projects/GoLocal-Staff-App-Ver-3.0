@@ -128,15 +128,18 @@ namespace GoLocal.Controllers
                         }
 
                         var imagePath = Path.Combine(_hostingEnvironment.ContentRootPath, folderPath, info.Image.FileName);
-                        await info.Image.CopyToAsync(new FileStream(imagePath,FileMode.Create, FileAccess.ReadWrite));                       
 
+                        using (FileStream f = new FileStream(imagePath, FileMode.Create, FileAccess.ReadWrite))
+                        {
+                            await info.Image.CopyToAsync(f);
+                        }
                         await _context.SaveChanges<registered_staff>();     
 
                         FillStaffTypes();
 
                         return RedirectToAction("AdditionalInfo");
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         return Error();
                     }
