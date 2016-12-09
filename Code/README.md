@@ -15,7 +15,7 @@ GoLocalStaff
 
 ## Registration Page Directory Structure
 * **src/GoLocal**:		Contains all the source code for the Registration page
-* ** src/GoLocal/Uploads**:	Contains the photos, videos and resumes of registered staff
+* **src/GoLocal/Uploads**:	Contains the photos, videos and resumes of registered staff
 
 
 
